@@ -28,7 +28,7 @@ Item{
 }
 ```
 
-*propertoes:*
+*properties:*
 
 `acceptEvent` 
 This is false by default. if you change this to true, it means that Ripple item accepts the click(pressed) events and prevent them to receive to bottom layouts.

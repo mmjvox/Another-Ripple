@@ -35,7 +35,7 @@ This is false by default. if you change this to true, it means that Ripple item 
 `color`
 This color of ripple effect.
 
-*functions:*
+*methods:*
 
 `pressed(int x , int y)` 
 It is used when an item like MouseArea masks Ripple item and doesn't allow clicking(pressing) Ripple item. you can call this and pass mouse x and y to it. 

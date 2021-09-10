@@ -10,7 +10,7 @@
 #include <tuple>
 #include <QVectorIterator>
 
-#include <QTimer>
+#include "rippleframe.h"
 
 class AnotherRipple : public QQuickPaintedItem
 {
@@ -23,8 +23,8 @@ public:
     void mousePressEvent(QMouseEvent *event);
 
     Q_INVOKABLE void pressed(qreal x, qreal y);
-
-    QTimer *timer;
+    
+    FrameHandler *frameHandler;
 
     QString getCircleColor();
     void setCircleColor(QString colorSTR);
@@ -36,6 +36,7 @@ signals:
     void stop();
     void colorChanged();
     void acceptEventChanged();
+    void handleFrames();
 
 public slots:
     void rePaint();
@@ -47,6 +48,10 @@ private:
     qreal multipl2(int);
     QColor circleColor="#20000000";
     bool acceptEvent=false;
+    bool frameConnected=false;
+
+    void addFrameHandler();
+    void removeFrameHandler();
 
 };
 

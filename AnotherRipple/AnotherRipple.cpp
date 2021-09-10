@@ -5,11 +5,7 @@ AnotherRipple::AnotherRipple(QQuickItem *parent) : QQuickPaintedItem(parent)
     this->setAntialiasing(true);
     setAcceptedMouseButtons(Qt::LeftButton);
 
-    timer = new QTimer(this);
-    connect(this,&AnotherRipple::stop,timer,&QTimer::stop,Qt::QueuedConnection);
-    connect(timer,&QTimer::timeout,this,&AnotherRipple::rePaint,Qt::QueuedConnection);
-    timer->setInterval(16);
-    timer->start();
+    frameHandler  = FrameHandler::getInstance();
 }
 
 void AnotherRipple::paint(QPainter *painter)
@@ -44,19 +40,18 @@ void AnotherRipple::paint(QPainter *painter)
 
 void AnotherRipple::mousePressEvent(QMouseEvent *event)
 {
+    addFrameHandler();
+
     startPoses.append( std::make_tuple(event->localPos().x(),event->localPos().y(), 1) );
 
     acceptEvent? event->accept() : event->ignore();
-
-    if(!timer->isActive())
-        timer->start();
 }
 
 void AnotherRipple::pressed(qreal x, qreal y)
 {
+    addFrameHandler();
+
     startPoses.append( std::make_tuple(x,y, 1) );
-    if(!timer->isActive())
-        timer->start();
 }
 
 void AnotherRipple::rePaint()
@@ -68,7 +63,7 @@ void AnotherRipple::endPaint()
 {
     if(startPoses.count()==0)
     {
-        //qDebug()<<"this->stop();";
+        removeFrameHandler();
         emit this->stop();
     }
 }
@@ -81,6 +76,24 @@ qreal AnotherRipple::devide2(qreal pos, int radius)
 qreal AnotherRipple::multipl2(int radius)
 {
     return radius*2;
+}
+
+void AnotherRipple::removeFrameHandler()
+{
+    if(frameConnected){
+        frameConnected= !disconnect(frameHandler,&FrameHandler::onNewFrame,this,&AnotherRipple::rePaint);
+        frameHandler->pause();
+    }
+}
+
+void AnotherRipple::addFrameHandler()
+{
+    if(!frameConnected)
+    {
+        frameConnected = connect(frameHandler,&FrameHandler::onNewFrame,this,&AnotherRipple::rePaint,Qt::QueuedConnection);
+        frameHandler->resume();
+    }
+
 }
 
 QString AnotherRipple::getCircleColor()

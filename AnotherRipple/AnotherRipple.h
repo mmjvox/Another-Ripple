@@ -12,7 +12,6 @@
 
 #include "rippleframe.h"
 
-
 class AnotherRipple : public QQuickPaintedItem
 {
     Q_PROPERTY(QString color READ getCircleColor WRITE setCircleColor  NOTIFY colorChanged CONSTANT)
@@ -24,7 +23,7 @@ public:
     void mousePressEvent(QMouseEvent *event);
 
     Q_INVOKABLE void pressed(qreal x, qreal y);
-
+    
     FrameHandler *frameHandler;
 
     QString getCircleColor();

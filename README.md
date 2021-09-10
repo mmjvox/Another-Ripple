@@ -32,8 +32,20 @@ Item{
 
 `acceptEvent` 
 This is false by default. if you change this to true, it means that Ripple item accepts the click(pressed) events and prevent them to receive to bottom layouts.
+
 `color`
-This color of ripple effect.
+This property sets Color of ripple effect.
+
+`clipRadius`
+This property sets radius of Ripple Area to prevent painting out of corner.
+
+`xClipRadius`
+This property sets only x in clipRadius property specially.
+
+`yClipRadius`
+This property sets only y in clipRadius property specially.
+
+*node:* by default clipRadius sets both x and y
 
 *methods:*
 

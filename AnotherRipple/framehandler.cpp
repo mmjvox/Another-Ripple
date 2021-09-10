@@ -24,13 +24,6 @@ void FrameHandler::run()
     }
 }
 
-void FrameHandler::handleFrames()
-{
-
-}
-
-
-
 void FrameHandler::setFps(unsigned int newFps)
 {
     if(newFps>0)

@@ -54,12 +54,14 @@ Window {
         y: 298
         width: 200;
         height: 80;
-        radius: 5;
+        radius: 50;
         clip: true;
 
         SimpleRipple{
             anchors.fill: parent;
             color: "#50ffa070"
+            xClipRadius:parent.radius-10;
+            yClipRadius:parent.radius;
         }
     }
 
@@ -86,6 +88,7 @@ Window {
             anchors.fill: parent;
             color: "#50ffa070"
             acceptEvent: true;
+            clipRadius:parent.radius;
         }
     }
 

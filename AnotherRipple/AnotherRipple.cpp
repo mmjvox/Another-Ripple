@@ -10,6 +10,13 @@ AnotherRipple::AnotherRipple(QQuickItem *parent) : QQuickPaintedItem(parent)
 
 void AnotherRipple::paint(QPainter *painter)
 {
+    if(clipRadius>0 or xClipRadius>0 or yClipRadius>0)
+    {
+        QPainterPath path;
+        path.addRoundedRect(QRectF(0, 0, this->width(), this->height()), xClipRadius>0?xClipRadius:clipRadius , yClipRadius>0?yClipRadius:clipRadius );
+        painter->setClipPath(path);
+    }
+
     painter->setPen(Qt::NoPen);
 
     QVectorIterator<std::tuple<qreal,qreal,unsigned int>> i(startPoses);
@@ -66,6 +73,24 @@ void AnotherRipple::endPaint()
         removeFrameHandler();
         emit this->stop();
     }
+}
+
+void AnotherRipple::setYClipRadius(unsigned int newYClipRadius)
+{
+    if(newYClipRadius>=0)
+        yClipRadius = newYClipRadius;
+}
+
+void AnotherRipple::setXClipRadius(unsigned int newXClipRadius)
+{
+    if(newXClipRadius>=0)
+        xClipRadius = newXClipRadius;
+}
+
+void AnotherRipple::setClipRadius(unsigned int newClipRadius)
+{
+    if(newClipRadius>=0)
+        clipRadius = newClipRadius;
 }
 
 qreal AnotherRipple::devide2(qreal pos, int radius)

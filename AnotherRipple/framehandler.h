@@ -6,7 +6,6 @@
 #include <QMutex>
 #include <QWaitCondition>
 #include <QThread>
-#include <QDebug>
 
 class FrameHandler : public QThread
 {
@@ -27,8 +26,6 @@ public:
     void resume();
     void pause();
 
-public slots:
-    void handleFrames();
 
 signals:
     void onNewFrame();

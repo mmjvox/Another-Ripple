@@ -10,7 +10,7 @@ AnotherRipple::AnotherRipple(QQuickItem *parent) : QQuickPaintedItem(parent)
 
 void AnotherRipple::paint(QPainter *painter)
 {
-    if(clipRadius>0 or xClipRadius>0 or yClipRadius>0)
+    if(clipRadius>0 || xClipRadius>0 || yClipRadius>0)
     {
         QPainterPath path;
         path.addRoundedRect(QRectF(0, 0, this->width(), this->height()), xClipRadius>0?xClipRadius:clipRadius , yClipRadius>0?yClipRadius:clipRadius );

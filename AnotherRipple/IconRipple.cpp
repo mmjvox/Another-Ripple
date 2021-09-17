@@ -1,6 +1,6 @@
-#include "AnotherRipple.h"
+#include "IconRipple.h"
 
-AnotherRipple::AnotherRipple(QQuickItem *parent) : QQuickPaintedItem(parent)
+IconRipple::IconRipple(QQuickItem *parent) : QQuickPaintedItem(parent)
 {
     this->setAntialiasing(true);
     setAcceptedMouseButtons(Qt::LeftButton);
@@ -8,7 +8,7 @@ AnotherRipple::AnotherRipple(QQuickItem *parent) : QQuickPaintedItem(parent)
     frameHandler  = FrameHandler::getInstance();
 }
 
-void AnotherRipple::paint(QPainter *painter)
+void IconRipple::paint(QPainter *painter)
 {
     if(clipRadius>0 || xClipRadius>0 || yClipRadius>0)
     {
@@ -36,7 +36,19 @@ void AnotherRipple::paint(QPainter *painter)
             auto color=circleColor.lighter(decColor);
             painter->setBrush(QBrush(color,Qt::SolidPattern));
 
-            painter->drawEllipse(devide2(std::get<0>(pos),radius), devide2(std::get<1>(pos),radius), multipl2(radius), multipl2(radius));
+
+            QGraphicsColorizeEffect *effect = new QGraphicsColorizeEffect();
+                effect->setColor(Qt::red);
+            QGraphicsSvgItem *svg = new QGraphicsSvgItem(QString("/oldhome/mmjvox/Downloads/energy.svg"));
+                 svg->setGraphicsEffect(effect);
+
+                 svg->setZValue(100);
+                 svg->setRotation(45);
+                 svg->setVisible(false);
+
+            svg->renderer()->render(painter,QRectF(devide2(std::get<0>(pos),radius), devide2(std::get<1>(pos),radius), multipl2(radius), multipl2(radius)));
+
+//            painter->drawRect(devide2(std::get<0>(pos),radius), devide2(std::get<1>(pos),radius), multipl2(radius), multipl2(radius));
 
             std::get<2>(pos)=radius+4;
             startPoses.replace(index,pos);
@@ -45,7 +57,7 @@ void AnotherRipple::paint(QPainter *painter)
     endPaint();
 }
 
-void AnotherRipple::mousePressEvent(QMouseEvent *event)
+void IconRipple::mousePressEvent(QMouseEvent *event)
 {
     addFrameHandler();
 
@@ -54,19 +66,19 @@ void AnotherRipple::mousePressEvent(QMouseEvent *event)
     acceptEvent? event->accept() : event->ignore();
 }
 
-void AnotherRipple::pressed(qreal x, qreal y)
+void IconRipple::pressed(qreal x, qreal y)
 {
     addFrameHandler();
 
     startPoses.append( std::make_tuple(x,y, 1) );
 }
 
-void AnotherRipple::rePaint()
+void IconRipple::rePaint()
 {
     this->update();
 }
 
-void AnotherRipple::endPaint()
+void IconRipple::endPaint()
 {
     if(startPoses.count()==0)
     {
@@ -75,69 +87,69 @@ void AnotherRipple::endPaint()
     }
 }
 
-void AnotherRipple::setYClipRadius(unsigned int newYClipRadius)
+void IconRipple::setYClipRadius(unsigned int newYClipRadius)
 {
     if(newYClipRadius>=0)
         yClipRadius = newYClipRadius;
 }
 
-void AnotherRipple::setXClipRadius(unsigned int newXClipRadius)
+void IconRipple::setXClipRadius(unsigned int newXClipRadius)
 {
     if(newXClipRadius>=0)
         xClipRadius = newXClipRadius;
 }
 
-void AnotherRipple::setClipRadius(unsigned int newClipRadius)
+void IconRipple::setClipRadius(unsigned int newClipRadius)
 {
     if(newClipRadius>=0)
         clipRadius = newClipRadius;
 }
 
-qreal AnotherRipple::devide2(qreal pos, int radius)
+qreal IconRipple::devide2(qreal pos, int radius)
 {
     return pos-radius;
 }
 
-qreal AnotherRipple::multipl2(int radius)
+qreal IconRipple::multipl2(int radius)
 {
     return radius*2;
 }
 
-void AnotherRipple::removeFrameHandler()
+void IconRipple::removeFrameHandler()
 {
     if(frameConnected){
-        frameConnected= !disconnect(frameHandler,&FrameHandler::onNewFrame,this,&AnotherRipple::rePaint);
+        frameConnected= !disconnect(frameHandler,&FrameHandler::onNewFrame,this,&IconRipple::rePaint);
         frameHandler->pause();
     }
 }
 
-void AnotherRipple::addFrameHandler()
+void IconRipple::addFrameHandler()
 {
     if(!frameConnected)
     {
-        frameConnected = connect(frameHandler,&FrameHandler::onNewFrame,this,&AnotherRipple::rePaint,Qt::QueuedConnection);
+        frameConnected = connect(frameHandler,&FrameHandler::onNewFrame,this,&IconRipple::rePaint,Qt::QueuedConnection);
         frameHandler->resume();
     }
 
 }
 
-QString AnotherRipple::getCircleColor()
+QString IconRipple::getCircleColor()
 {
     return circleColor.name();
 }
 
-void AnotherRipple::setCircleColor(QString colorSTR)
+void IconRipple::setCircleColor(QString colorSTR)
 {
     circleColor = colorSTR;
     emit colorChanged();
 }
 
-bool AnotherRipple::getAcceptEvent()
+bool IconRipple::getAcceptEvent()
 {
     return acceptEvent;
 }
 
-void AnotherRipple::setAcceptEvent(bool accept)
+void IconRipple::setAcceptEvent(bool accept)
 {
     acceptEvent=accept;
     emit acceptEventChanged();

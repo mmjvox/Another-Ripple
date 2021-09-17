@@ -1,5 +1,5 @@
-#ifndef ANOTHERRIPPLE_H
-#define ANOTHERRIPPLE_H
+#ifndef SIMPLERIPPLE_H
+#define SIMPLERIPPLE_H
 
 #include <QQuickItem>
 #include <QtQuick/QQuickPaintedItem>
@@ -14,7 +14,7 @@
 #include "framehandler.h"
 
 
-class AnotherRipple : public QQuickPaintedItem
+class SimpleRipple : public QQuickPaintedItem
 {
     Q_PROPERTY(QString color READ getCircleColor WRITE setCircleColor  NOTIFY colorChanged CONSTANT)
     Q_PROPERTY(bool acceptEvent READ getAcceptEvent WRITE setAcceptEvent  NOTIFY acceptEventChanged CONSTANT)
@@ -23,7 +23,7 @@ class AnotherRipple : public QQuickPaintedItem
     Q_PROPERTY(int yClipRadius WRITE setYClipRadius CONSTANT)
     Q_OBJECT
 public:
-    AnotherRipple(QQuickItem *parent = 0);
+    SimpleRipple(QQuickItem *parent = 0);
     void paint(QPainter *painter);
     void mousePressEvent(QMouseEvent *event);
 
@@ -64,4 +64,4 @@ private:
 
 };
 
-#endif // ANOTHERRIPPLE_H
+#endif // SIMPLERIPPLE_H

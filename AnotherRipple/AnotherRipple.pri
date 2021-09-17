@@ -1,11 +1,15 @@
-QT += quick gui
+QT += quick gui svg
 
 CONFIG += c++11
 
 SOURCES += \
-        $$PWD/AnotherRipple.cpp \
+        $$PWD/ShapedRipple.cpp \
+        $$PWD/SimpleRipple.cpp \
+        $$PWD/IconRipple.cpp \
         $$PWD/framehandler.cpp
 
 HEADERS += \
-    $$PWD/AnotherRipple.h \
+    $$PWD/ShapedRipple.h \
+    $$PWD/SimpleRipple.h \
+    $$PWD/IconRipple.h \
     $$PWD/framehandler.h

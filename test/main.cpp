@@ -2,7 +2,9 @@
 #include <QQmlApplicationEngine>
 #include <QQmlContext>
 
-#include "../AnotherRipple/AnotherRipple.h"
+#include "../AnotherRipple/SimpleRipple.h"
+#include "../AnotherRipple/ShapedRipple.h"
+#include "../AnotherRipple/IconRipple.h"
 
 
 int main(int argc, char *argv[])
@@ -13,7 +15,9 @@ int main(int argc, char *argv[])
 
     QGuiApplication app(argc, argv);
 
-    qmlRegisterType<AnotherRipple>("AnotherRipple", 1, 0, "SimpleRipple");
+    qmlRegisterType<SimpleRipple>("AnotherRipple", 1, 0, "SimpleRipple");
+    qmlRegisterType<ShapedRipple>("AnotherRipple", 1, 0, "ShapedRipple");
+    qmlRegisterType<IconRipple>("AnotherRipple", 1, 0, "IconRipple");
 
     QQmlApplicationEngine engine;
     const QUrl url(QStringLiteral("qrc:/main.qml"));

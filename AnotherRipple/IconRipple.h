@@ -65,6 +65,8 @@ private:
     void addFrameHandler();
     void removeFrameHandler();
 
+    const double mAlfaRatio = 128;
+    double alfa_calc(double &radius) const;
 };
 
 #endif // ICONRIPPLE_H

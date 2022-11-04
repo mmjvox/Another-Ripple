@@ -23,32 +23,38 @@ void IconRipple::paint(QPainter *painter)
     int index=0;
     while (i.hasNext()){
         auto pos = i.next();
-            int radius= std::get<2>(pos);
+            double radius= std::get<2>(pos);
 
-            int decColor=100+(radius/4);
+            auto newalfa = alfa_calc(radius);
+            auto newColor = circleColor;
 
-            if(decColor>150)
+            if(newalfa>=0)
+            {
+                newColor.setAlpha(newalfa);
+            }
+            else
             {
                 startPoses.remove(index);
                 continue;
             }
 
-            auto color=circleColor.lighter(decColor);
-            painter->setBrush(QBrush(color,Qt::SolidPattern));
+            painter->setBrush(QBrush(newColor,Qt::SolidPattern));
 
 
-            QGraphicsColorizeEffect *effect = new QGraphicsColorizeEffect();
-                effect->setColor(Qt::red);
-            QGraphicsSvgItem *svg = new QGraphicsSvgItem(QString("/oldhome/mmjvox/Downloads/energy.svg"));
-                 svg->setGraphicsEffect(effect);
+//            QGraphicsColorizeEffect *effect = new QGraphicsColorizeEffect();
+//                effect->setColor(Qt::red);
+//            QGraphicsSvgItem *svg = new QGraphicsSvgItem(QString("/home/mmjvox/Documents/start.svg"));
+//                 svg->setGraphicsEffect(effect);
 
-                 svg->setZValue(100);
-                 svg->setRotation(45);
-                 svg->setVisible(false);
+//                 svg->setZValue(100);
+//                 svg->setRotation(45);
+//                 svg->setVisible(false);
 
-            svg->renderer()->render(painter,QRectF(devide2(std::get<0>(pos),radius), devide2(std::get<1>(pos),radius), multipl2(radius), multipl2(radius)));
+//            svg->renderer()->render(painter,QRectF(devide2(std::get<0>(pos),radius), devide2(std::get<1>(pos),radius), multipl2(radius), multipl2(radius)));
 
 //            painter->drawRect(devide2(std::get<0>(pos),radius), devide2(std::get<1>(pos),radius), multipl2(radius), multipl2(radius));
+
+            painter->drawPixmap(QRectF(0,0,50,50),QPixmap("/home/mmjvox/Documents/start.png"),QRectF(0,0,50,50));
 
             std::get<2>(pos)=radius+4;
             startPoses.replace(index,pos);
@@ -153,4 +159,21 @@ void IconRipple::setAcceptEvent(bool accept)
 {
     acceptEvent=accept;
     emit acceptEventChanged();
+}
+
+double IconRipple::alfa_calc(double &radius) const
+{
+    double circleColorAlpha = circleColor.alpha();
+    if(circleColorAlpha>0){
+
+        double mAlfaDivision = mAlfaRatio / circleColorAlpha;
+
+        if(mAlfaDivision>0){
+
+            double decColor = radius / mAlfaDivision;
+            return circleColor.alpha()-decColor;
+        }
+        return 0;
+    }
+    return 0;
 }

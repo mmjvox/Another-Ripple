@@ -61,6 +61,7 @@ Window {
 
         SimpleRipple{
             anchors.fill: parent;
+//            color: "#ffa070"
             color: "#50ffa070"
             xClipRadius:parent.radius-10;
             yClipRadius:parent.radius;

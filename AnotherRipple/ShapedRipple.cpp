@@ -23,24 +23,27 @@ void ShapedRipple::paint(QPainter *painter)
     int index=0;
     while (i.hasNext()){
         auto pos = i.next();
-            int radius= std::get<2>(pos);
+        double radius= std::get<2>(pos);
 
-            int decColor=100+(radius/4);
+        auto newalfa = alfa_calc(radius);
+        auto newColor = circleColor;
 
-            if(decColor>150)
-            {
-                startPoses.remove(index);
-                continue;
-            }
+        if(newalfa>=0)
+        {
+            newColor.setAlpha(newalfa);
+        }
+        else
+        {
+            startPoses.remove(index);
+            continue;
+        }
 
-            auto color=circleColor.lighter(decColor);
-            painter->setBrush(QBrush(color,Qt::SolidPattern));
+        painter->setBrush(QBrush(newColor,Qt::SolidPattern));
+        painter->drawRect(devide2(std::get<0>(pos),radius), devide2(std::get<1>(pos),radius), multipl2(radius), multipl2(radius));
 
-            painter->drawRect(devide2(std::get<0>(pos),radius), devide2(std::get<1>(pos),radius), multipl2(radius), multipl2(radius));
-
-            std::get<2>(pos)=radius+4;
-            startPoses.replace(index,pos);
-            index++;
+        std::get<2>(pos)=radius+4;
+        startPoses.replace(index,pos);
+        index++;
     }
     endPaint();
 }
@@ -141,4 +144,21 @@ void ShapedRipple::setAcceptEvent(bool accept)
 {
     acceptEvent=accept;
     emit acceptEventChanged();
+}
+
+double ShapedRipple::alfa_calc(double &radius) const
+{
+    double circleColorAlpha = circleColor.alpha();
+    if(circleColorAlpha>0){
+
+        double mAlfaDivision = mAlfaRatio / circleColorAlpha;
+
+        if(mAlfaDivision>0){
+
+            double decColor = radius / mAlfaDivision;
+            return circleColor.alpha()-decColor;
+        }
+        return 0;
+    }
+    return 0;
 }

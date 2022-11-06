@@ -1,10 +1,10 @@
 #ifndef ANOTHERRIPPLE_H
 #define ANOTHERRIPPLE_H
 
-#include "./SimpleRipple.h"
-#include "./ShapedRipple.h"
-#include "./IconRipple.h"
-#include "./ImageRipple.h"
+#include "./AnotherRipple/SimpleRipple.h"
+#include "./AnotherRipple/ShapedRipple.h"
+#include "./AnotherRipple/IconRipple.h"
+#include "./AnotherRipple/ImageRipple.h"
 
 namespace AnotherRipple {
 

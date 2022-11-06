@@ -2,7 +2,7 @@
 #include <QQmlApplicationEngine>
 #include <QQmlContext>
 
-#include <../AnotherRipple/AnotherRipple.h>
+#include <AnotherRipple.h>
 
 
 int main(int argc, char *argv[])

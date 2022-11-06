@@ -1,11 +1,11 @@
-#include "IconRipple.h"
+#include "ImageRipple.h"
 
 namespace AnotherRipple {
-IconRipple::IconRipple(QQuickItem *parent) : AnotherRippleBase(parent)
+ImageRipple::ImageRipple(QQuickItem *parent) : AnotherRippleBase(parent)
 {
 }
 
-void IconRipple::paint(QPainter *painter)
+void ImageRipple::paint(QPainter *painter)
 {
     if(clipRadius>0 || xClipRadius>0 || yClipRadius>0)
     {
@@ -46,7 +46,7 @@ void IconRipple::paint(QPainter *painter)
     endPaint();
 }
 
-void IconRipple::setCircleColor(QString colorSTR)
+void ImageRipple::setCircleColor(QString colorSTR)
 {
     circleColor = colorSTR;
     tintImage();
@@ -54,12 +54,12 @@ void IconRipple::setCircleColor(QString colorSTR)
 }
 
 
-QString IconRipple::getImageSource()
+QString ImageRipple::getImageSource()
 {
     return "undefined";
 }
 
-void IconRipple::setImageSource(QString source)
+void ImageRipple::setImageSource(QString source)
 {
     if(mImage.load(source))
     {
@@ -74,20 +74,30 @@ void IconRipple::setImageSource(QString source)
     }
 }
 
-void IconRipple::tintImage()
+void ImageRipple::tintImage()
 {
     if(mImage.isNull())
     {
         return;
     }
 
-    QPainter pixmapPainter(&mImage);
-    pixmapPainter.setCompositionMode(QPainter::CompositionMode_SourceAtop);
-    pixmapPainter.fillRect(mImage.rect(), circleColor);
-    pixmapPainter.end();
+    QImage baseLayer(mImage.size(), QImage::Format_ARGB32_Premultiplied);
+    baseLayer.fill(circleColor);
+
+    QPainter layerPainter(&baseLayer);
+    QRectF sourceRect(mImage.rect());
+
+//    QImage maskLayer = mImage.createAlphaMask();
+//    maskLayer.setAlphaChannel(mImage.alphaChannel());
+//    layerPainter.drawImage(sourceRect,maskLayer);
+
+    layerPainter.setOpacity(0.9);
+    layerPainter.drawImage(sourceRect,mImage);
+    layerPainter.end();
+    mImage = baseLayer;
 }
 
-double IconRipple::opacity_calc(double &radius) const
+double ImageRipple::opacity_calc(double &radius) const
 {
     return radius*0.01;
 }

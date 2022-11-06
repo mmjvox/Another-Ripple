@@ -1,16 +1,16 @@
-#ifndef ICONRIPPLE_H
-#define ICONRIPPLE_H
+#ifndef IMAGERIPPLE_H
+#define IMAGERIPPLE_H
 
 
 #include "AnotherRippleBase.h"
 
 namespace AnotherRipple {
-class IconRipple : public AnotherRippleBase
+class ImageRipple : public AnotherRippleBase
 {
     Q_PROPERTY(QString imageSource READ getImageSource WRITE setImageSource NOTIFY imageSourceChanged)
     Q_OBJECT
 public:
-    IconRipple(QQuickItem *parent = 0);
+    ImageRipple(QQuickItem *parent = 0);
     void paint(QPainter *painter) override;
 
     void setCircleColor(QString colorSTR) override;
@@ -27,4 +27,4 @@ private:
     void tintImage();
 };
 }
-#endif // ICONRIPPLE_H
+#endif // IMAGERIPPLE_H

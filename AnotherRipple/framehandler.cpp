@@ -1,5 +1,6 @@
 #include "framehandler.h"
 
+namespace AnotherRipple {
 FrameHandler* FrameHandler::instance= nullptr;
 std::once_flag FrameHandler::initInstanceFlag;
 
@@ -45,4 +46,5 @@ void FrameHandler::pause()
     if(!anyConnection)
         running = false;
     sync.unlock();
+}
 }

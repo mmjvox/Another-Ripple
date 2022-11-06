@@ -2,9 +2,7 @@
 #include <QQmlApplicationEngine>
 #include <QQmlContext>
 
-#include "../AnotherRipple/SimpleRipple.h"
-#include "../AnotherRipple/ShapedRipple.h"
-#include "../AnotherRipple/IconRipple.h"
+#include <../AnotherRipple/AnotherRipple.h>
 
 
 int main(int argc, char *argv[])
@@ -13,11 +11,9 @@ int main(int argc, char *argv[])
     QCoreApplication::setAttribute(Qt::AA_EnableHighDpiScaling);
 #endif
 
-    QGuiApplication app(argc, argv);
+    AnotherRipple::init();
 
-    qmlRegisterType<SimpleRipple>("AnotherRipple", 1, 0, "SimpleRipple");
-    qmlRegisterType<ShapedRipple>("AnotherRipple", 1, 0, "ShapedRipple");
-    qmlRegisterType<IconRipple>("AnotherRipple", 1, 0, "IconRipple");
+    QGuiApplication app(argc, argv);
 
     QQmlApplicationEngine engine;
     const QUrl url(QStringLiteral("qrc:/main.qml"));

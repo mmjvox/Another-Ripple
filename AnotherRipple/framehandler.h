@@ -7,6 +7,7 @@
 #include <QWaitCondition>
 #include <QThread>
 
+namespace AnotherRipple {
 class FrameHandler : public QThread
 {
     Q_OBJECT
@@ -46,5 +47,5 @@ private:
     QWaitCondition pauseCond;
     bool running=false;
 };
-
+}
 #endif // FRAMEHANDLER_H

@@ -138,14 +138,52 @@ Window {
         width: 200
         height: 80
         radius: 5
+
+        Text {
+            text: qsTr("text")
+            anchors.centerIn: parent;
+        }
+
         IconRipple {
-            color: "#50ffa070"
+            color: "#d4ff47"//"#50ffa070"
             anchors.fill: parent
             acceptEvent: true
             clipRadius: parent.radius
+            imageSource: "/home/mmjvox/Documents/start.png";
         }
         clip: true
     }
 
+    DropShadow {
+        anchors.fill: itemRect5
+        horizontalOffset: 0
+        verticalOffset: 0
+        radius: 12.0
+        samples: 17
+        color: "#50000000"
+        source: itemRect5
+    }
+    Rectangle {
+        id: itemRect5
+        x: 270
+        y: 159
+        width: 200
+        height: 80
+        radius: 5
+
+        Text {
+            text: qsTr("text")
+            anchors.centerIn: parent;
+        }
+
+        ImageRipple {
+            color: "#d4ff47"//"#50ffa070"
+            anchors.fill: parent
+            acceptEvent: true
+            clipRadius: parent.radius
+            imageSource: "/home/mmjvox/Documents/2.jpg";
+        }
+        clip: true
+    }
 
 }

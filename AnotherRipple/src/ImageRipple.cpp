@@ -99,6 +99,6 @@ void ImageRipple::tintImage()
 
 double ImageRipple::opacity_calc(double &radius) const
 {
-    return radius*0.01;
+    return (1-(radius*0.01));
 }
 }

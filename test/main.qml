@@ -11,9 +11,16 @@ Window {
     visible: true
     title: "My Ripple"
 
-    SimpleRipple{
-        anchors.fill: parent;
-        color: "#d4ff47"
+//    SimpleRipple{
+//        anchors.fill: parent;
+//        color: "#d4ff47"
+//    }
+
+    IconRipple {
+        color: "#50ffa070"
+        anchors.fill: parent
+        imageSource: "/home/mmjvox/Documents/start.png";
+        bounce: IconRipple.ClockWise;
     }
 
 

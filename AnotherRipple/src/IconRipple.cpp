@@ -24,19 +24,21 @@ void IconRipple::paint(QPainter *painter)
 
             auto newalfa = opacity_calc(radius);
 
-            if(newalfa<1)
-            {
-                painter->setOpacity(newalfa);
-            }
-            else
+            if(newalfa<0)
             {
                 startPoses.remove(index);
                 continue;
             }
+            else
+            {
+                painter->setOpacity(newalfa);
+            }
+
+            auto transformedImg = mImage.transformed(QMatrix().rotate(rotate_calc(radius)));
 
             QRectF targetRect(devide2(std::get<0>(pos),radius), devide2(std::get<1>(pos),radius), multipl2(radius), multipl2(radius));
-            QRectF sourceRect(0,0, mImage.width(), mImage.height());
-            painter->drawImage(targetRect, mImage, sourceRect);
+            QRectF sourceRect(0,0, transformedImg.width(), transformedImg.height());
+            painter->drawImage(targetRect, transformedImg, sourceRect);
 
 
             std::get<2>(pos)=radius+4;
@@ -89,6 +91,33 @@ void IconRipple::tintImage()
 
 double IconRipple::opacity_calc(double &radius) const
 {
-    return radius*0.01;
+    return (1-(radius*0.01));
 }
+double IconRipple::rotate_calc(double &radius) const
+{
+    switch (mBounce) {
+    case ClockWise:
+        return radius;
+    case Counter_ClockWise:
+        return -radius;
+    case None:
+    default:
+        return 0;
+    }
+}
+
+int IconRipple::getBounce()
+{
+    return mBounce;
+}
+
+void IconRipple::setBounce(int newBounce)
+{
+    if(mBounce!=newBounce)
+    {
+        mBounce=newBounce;
+        emit bounceChanged();
+    }
+}
+
 }

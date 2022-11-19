@@ -6,7 +6,7 @@ import QtGraphicalEffects 1.12
 import AnotherRipple 1.0
 
 Window {
-    width: 640
+    width: 840
     height: 480
     visible: true
     title: "My Ripple"
@@ -16,27 +16,37 @@ Window {
 //        color: "#d4ff47"
 //    }
 
-    IconRipple {
+    SimpleRipple {
         color: "#50ffa070"
         anchors.fill: parent
-        imageSource: "/home/mmjvox/Documents/start.png";
-        bounce: IconRipple.ClockWise;
     }
 
 
-
     Button {
-        id: button
-        width: 100
+        x: 270
+        y: 60
+        width: 96
         height: 60
-        anchors.centerIn: parent;
         text: "Button"
-        anchors.verticalCenterOffset: -151
-        anchors.horizontalCenterOffset: 0
 
         background: Rectangle{
             color: "#ebebeb"
         }
+
+        SimpleRipple{
+            anchors.fill: parent;
+            color: "#7988eb"
+        }
+    }
+
+
+    Rectangle {
+        x: 374
+        y: 60
+        width: 96
+        height: 60
+        color: "#ebebeb"
+
 
         SimpleRipple{
             anchors.fill: parent;
@@ -70,6 +80,7 @@ Window {
             anchors.fill: parent;
 //            color: "#ffa070"
             color: "#50ffa070"
+            acceptEvent: true
             xClipRadius:parent.radius-10;
             yClipRadius:parent.radius;
         }
@@ -192,5 +203,42 @@ Window {
         }
         clip: true
     }
+
+    Rectangle {
+        x: 270
+        y: 259
+        width: 200
+        height: 80
+        radius: 5
+        border.width: 1
+
+        IconRipple {
+            color: "#50ffa070"
+            anchors.fill: parent
+            clipRadius: parent.radius
+            acceptEvent: true;
+            imageSource: "/home/mmjvox/Documents/start.png";
+            bounce: IconRipple.ClockWise;
+        }
+    }
+
+    Rectangle {
+        x: 270
+        y: 359
+        width: 200
+        height: 80
+        radius: 5
+        border.width: 1
+
+        IconRipple {
+            color: "#50ffa070"
+            anchors.fill: parent
+            clipRadius: parent.radius
+            acceptEvent: true;
+            imageSource: "/home/mmjvox/Documents/start.png";
+            bounce: IconRipple.Counter_ClockWise;
+        }
+    }
+
 
 }
